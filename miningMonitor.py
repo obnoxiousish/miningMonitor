@@ -1,5 +1,6 @@
 import sys
 import subprocess
+import time
 
 """
 Author: obnoxious
@@ -37,15 +38,32 @@ class main:
 		"""
 		self.mining = False
 		self.gaming = False
-		self.miningCommand = "mine.bat"
-		self.gamingList = ["CocKS.eXe", "D2R.exe"]
+		self.miningCommand = "t-rex.exe --coin eth --url stratum+tcp://us2.ethermine.org:4444 -u 0xa40a9B1176ee3B606D4EAB472aEbF7A2C9C1b013 -w mary -a ethash --ab-indexing -d 1 --intensity 25"
+		self.gamingList = ["D2R.exe"]
 		self.log('Initialized.')
 
+		#self.log('Mining now starting....')
+		#self.startMining()
 
-		self.lowerGamingList()
-		self.amIGaming()
-
+		while True:
+			self.log('Loop started')
+			self.lowerGamingList()
+			self.amIGaming()
+			time.sleep(10)
+			self.log('Done sleeping')
+			continue
 		return None
+
+	def startMining(self):
+		self.popen = subprocess.Popen(self.miningCommand.split(' '))
+
+	def stopMining(self):
+		for process in psutil.process_iter():
+			if process.name() == 't-rex.exe':
+				process.kill()
+				continue
+
+		return True
 
 	def lowerGamingList(self):
 		"""
@@ -68,24 +86,58 @@ class main:
 
 	def amIGaming(self):
 		"""
-		We check and iter through the available processes, lowercase the capitals and then check if it is in the gaming list
+		This function is a bit crazy.
 
-		returns True / False depending on success
+		We start off by checking to see if we are gaming, if gaming is true then lets check if we are still gaming, if we are not still gaming then set gaming to False.
+		
+		Then if gaming is false lets check if we are gaming, we check if we are gaming by checking the process list for processes in our gaming process list variable
+		If we are indeed gaming we stop mining, set mining to False and set gaming to True
+
+		If mining and gaming is false we start mining, this is true at launch and when you are no longer gaming.
 
 		Boolean
 		"""
-		for process in psutil.process_iter():
-			processName = process.name().lower().strip().rstrip()
-			if processName in self.gamingList:
-				self.log(f"{processName} is running & in the gaming list!", alert="!")
-				self.log('We are gaming: Closing T-Rex....')
-			else:
-				pass
-				#self.log(f"{processName} is NOT in the gaming list!")
 
-		return True
+		#If gaming status is true we will check to see if the gaming process is still open if it is not gaming status is set to False
+		if self.gaming == True:
+			for process in psutil.process_iter():
+				if process.name().lower() == self.processName:
+					#print(process.name(), self.processName)
+					self.log('were still gaming!', alert='!')
+					return
+
+		#This will only be ran if the above for loop is unable to find the gaming process
+		self.gaming = False
+
+		#if gaming status is false we will check to see if there is a gaming process in our process list
+		if self.gaming == False:
+			for process in psutil.process_iter():
+				pname = process.name().lower().strip().rstrip()
+				if pname in self.gamingList:
+					self.processName = process.name().lower().strip().rstrip()
+					self.log(f"{self.processName} is running & in the gaming list!", alert="!")
+					self.log('We are gaming: Closing miner.......')
+					self.stopMining()
+					self.mining = False
+					self.gaming = True
+		
+		#by default mining and gaming status are false so this will launch the miner on start and when the status variables are both set back to false
+		if self.mining == False and self.gaming == False:
+			self.log('Mining is false and gaming is false, starting miner.')
+			self.startMining()
+			self.log('Miner started.')
+			self.mining = True
+			self.gaming = False
+			return
+		
+		elif self.mining == True and self.gaming == False:
+			self.log('I am already mining so I will not start a new one.')
+
+		return
 
 	def log(self, msg, alert='+'):
 		print(f'[{alert}] {msg}')
+
+
 if __name__ == "__main__":
 	main()
