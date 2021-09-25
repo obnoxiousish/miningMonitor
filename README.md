@@ -5,12 +5,8 @@
 	git clone https://github.com/obnoxiousish/miningMonitor
 	cd miningMonitor
 	python miningMonitor.py
-or
-	Browse to the folder
-	Double click the py file
 
-or:
-
+### Easier
 	Install Sublime Merge
 	clone https://github.com/obnoxiousish/miningMonitor
 	Then just double click the .py file
