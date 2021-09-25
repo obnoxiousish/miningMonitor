@@ -1,4 +1,8 @@
-# miningMonitor in python3
+# miningMonitor in python3 for T-Rex
+
+## About
+
+This could probably be easily edited into working for other mining software. Only tested with T-Rex. 
 
 ## How-to
 	cd ~
