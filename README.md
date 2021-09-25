@@ -1,10 +1,10 @@
 # miningMonitor in python3
 
 ## How-to
-cd ~
-git clone https://github.com/obnoxiousish/miningMonitor
-cd miningMonitor
-python miningMonitor.py
+	cd ~
+	git clone https://github.com/obnoxiousish/miningMonitor
+	cd miningMonitor
+	python miningMonitor.py
 
 or:
 
