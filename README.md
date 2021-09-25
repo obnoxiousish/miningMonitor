@@ -11,7 +11,7 @@ This could probably be easily edited into working for other mining software. Onl
 	python miningMonitor.py
 
 ### Easier
-	Install Sublime Merge
+	Install Sublime Merge https://www.sublimemerge.com/download_thanks?target=win-x64
 	clone https://github.com/obnoxiousish/miningMonitor
 	Then just double click the .py file
 
