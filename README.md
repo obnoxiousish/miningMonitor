@@ -3,6 +3,7 @@
 ## About
 
 This could probably be easily edited into working for other mining software. Only tested with T-Rex. 
+I developed this using windows, could imagine it would work on GNU/Linux & Mac OS X as well.
 
 ## How-to
 	cd ~
