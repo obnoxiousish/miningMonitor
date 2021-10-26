@@ -29,6 +29,7 @@ class main:
 		"""
 		
 		This function is creating some variables to be used in our actual code.
+		This function will also start a loop that will run forever, the loop runs our state checks and various other functions.
 		Our booleans will be used to monitor our state.
 		Gaming list will be used to maintain a list processes that are games.
 		Mining command is the command to be ran to run a miner (T-Rex)
@@ -53,6 +54,7 @@ class main:
 			self.log('Done sleeping')
 			continue
 		return None
+#Quick code to tell user to install psutil if not done already.
 
 	def startMining(self):
 		self.popen = subprocess.Popen(self.miningCommand.split(' '))
