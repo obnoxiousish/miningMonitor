@@ -1,10 +1,11 @@
 import psutil
 import sys
+import os
 from time import sleep
 
 count = 0
 processToCheck = 't-rex'
-sleepTime = 5
+sleepTime = 24
 countMaximum = 5
 
 def processInList(process):
@@ -27,4 +28,4 @@ while count < countMaximum:
 		sleep(sleepTime)
 else:
 	print(f'Count hit: {countMaximum}, restarting PC.')
-	sys.exit(0)
+	os.system("shutdown -t 0 -r -f")
